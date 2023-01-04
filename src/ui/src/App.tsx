@@ -3,6 +3,7 @@ import femboySocks from "./assets/femboySocks.png";
 import { invoke } from "@tauri-apps/api/tauri";
 import "./App.css";
 import "./titlebar/titlebar.css"
+import {appWindow} from "@tauri-apps/api/window";
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
@@ -16,7 +17,7 @@ function App() {
   return (
       <div style={{width: "100%"}}>
           <div data-tauri-drag-region="FUCK OFF INTELLISENSE" className="titlebar">
-              <div className="titlebar-button" id="titlebar-close">
+              <div className="titlebar-button" id="titlebar-close" onClick={() => appWindow.minimize()}>
                   <img src="https://api.iconify.design/mdi:close.svg" alt="close"/>
               </div>
           </div>
