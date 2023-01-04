@@ -21,6 +21,7 @@ unsafe extern "system" fn dll_main(_module: *mut c_void) -> u32
 }
 
 #[allow(unused_variables, non_snake_case)]
+#[no_mangle]
 pub unsafe extern "stdcall" fn DllMain(module: HMODULE, reason: DWORD, _: LPVOID) -> BOOL 
 {
     DisableThreadLibraryCalls(module);
