@@ -1,10 +1,9 @@
 #[cfg(not(target_os = "windows"))]
 compile_error!("use windows you fucking degen");
-use std::ffi::c_char;
-use eframe::egui;
+use std::ffi::{c_char, CString};
 
-unsafe fn get_interface<T>(name: *const c_char, library: *const c_char) -> T {
-    let handle = GetModuleHandleA(library as *const i8);
+unsafe fn get_interface<T>(name: &str, library: &str) -> *mut T {
+    let handle = GetModuleHandleA(library.as_ptr() as *const i8);
     
     let function_address = GetProcAddress(handle, "CreateInterface".as_ptr() as *const i8);
     
@@ -14,7 +13,8 @@ unsafe fn get_interface<T>(name: *const c_char, library: *const c_char) -> T {
     
     type CreateInterfaceFn = extern "C" fn(*const c_char, *mut i32) -> *mut c_void;
     let create_interface: CreateInterfaceFn = std::mem::transmute(function_address);
-    create_interface(name.as_ptr() as *const i8, std::ptr::null_mut()) as T
+
+    create_interface(name.as_ptr() as *const c_char, std::ptr::null_mut()) as *mut T
 }
 
 use winapi::{
@@ -29,12 +29,9 @@ use winapi::{
 };
 unsafe extern "system" fn dll_main(_module: *mut c_void) -> u32 {
     AllocConsole();
-    SetConsoleTitleA("femboyware".as_ptr() as *const i8);
-
-    let options = eframe::NativeOptions {
-        initial_window_size: Some(egui::Vec2::new(500.0, 500.0)),
-        ..Default::default()
-    };
+    SetConsoleTitleA(CString::new("femboyware").unwrap().as_ptr() as *const i8);
+    //let client: *const c_void = get_interface("VClient018", "client.dll");
+    println!("client: gay ass");
     
     0
 }
