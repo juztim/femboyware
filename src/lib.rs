@@ -1,22 +1,6 @@
 #[cfg(not(target_os = "windows"))]
 compile_error!("use windows you fucking degen");
 use std::ffi::{c_char, CString};
-
-unsafe fn get_interface<T>(name: &str, library: &str) -> *mut T {
-    let handle = GetModuleHandleA(library.as_ptr() as *const i8);
-    
-    let function_address = GetProcAddress(handle, "CreateInterface".as_ptr() as *const i8);
-    
-    if function_address == std::ptr::null_mut() {
-        panic!("Failed to get function address");
-    }
-    
-    type CreateInterfaceFn = extern "C" fn(*const c_char, *mut i32) -> *mut c_void;
-    let create_interface: CreateInterfaceFn = std::mem::transmute(function_address);
-
-    create_interface(name.as_ptr() as *const c_char, std::ptr::null_mut()) as *mut T
-}
-
 use winapi::{
     ctypes::c_void,
     shared::minwindef::{BOOL, DWORD, HMODULE, LPVOID, TRUE},
@@ -27,11 +11,35 @@ use winapi::{
         libloaderapi::GetProcAddress,
     },
 };
+
+unsafe fn get_interface<T>(name: &str, library: &str) -> *mut T {
+    let handle = GetModuleHandleA(library.as_ptr() as *const i8);
+    
+    if handle.is_null() {
+        panic!("failed to get module handle");
+    }
+    
+    println!("handle: {:?}", handle);
+    
+    let function_address = GetProcAddress(handle, "CreateInterface".as_ptr() as *const i8);
+    
+    if function_address == std::ptr::null_mut() {
+        panic!("Failed to get function address");
+    }
+    
+    println!("function address: {:?}", function_address);
+    
+    type CreateInterfaceFn = extern "C" fn(*const c_char, *mut i32) -> *mut c_void;
+    let create_interface: CreateInterfaceFn = std::mem::transmute(function_address);
+
+    create_interface(name.as_ptr() as *const c_char, std::ptr::null_mut()) as *mut T
+}
+
 unsafe extern "system" fn dll_main(_module: *mut c_void) -> u32 {
     AllocConsole();
     SetConsoleTitleA(CString::new("femboyware").unwrap().as_ptr() as *const i8);
-    //let client: *const c_void = get_interface("VClient018", "client.dll");
-    println!("client: gay ass");
+    let client: *const c_void = get_interface("VClient018", "client.dll");
+    println!("client address: {:p}", client);
     
     0
 }
