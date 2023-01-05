@@ -1,14 +1,13 @@
-﻿use vtables::VTable;
+use vtables::VTable;
 use vtables_derive::{has_vtable, virtual_index, VTable};
 
 // https://gitlab.com/KittenPopo/csgo-2018-source/-/blob/main/game/client/iclientmode.h
 
 #[has_vtable]
 #[derive(VTable, Debug)]
-pub struct chcl_client {}
+pub struct HclClient {}
 
-#[allow(non_snake_case)]
-impl chcl_client
+impl HclClient
 {
     #[virtual_index(10)]
     pub fn hud_process_input(&self, active: bool) {}

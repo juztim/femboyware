@@ -1,9 +1,7 @@
-﻿use std::ffi::c_void;
+use crate::sdk::interfaces::chcl_client::HclClient;
 use lazy_static::lazy_static;
-use crate::sdk::interfaces::i_client_mode::i_client_mode;
-use crate::sdk::interfaces::chcl_client::chcl_client;
 use spin::RwLock;
-
+use std::ffi::c_void;
 
 // lazy_static! {
 //     static ref CLIENT_INTERFACE: *const chcl_client = RwLock::new(0x0);
