@@ -1,7 +1,6 @@
-﻿//! Vector struct
+//! Vector struct
 use core::ops;
-
-use winapi::ctypes::c_float;
+use std::ffi::c_float;
 
 #[repr(C)]
 #[derive(Debug, Clone, Copy)]
@@ -16,7 +15,7 @@ pub struct Vec3
 #[derive(Clone, Copy)]
 pub struct Vec2
 {
-    pub yaw:   c_float,
+    pub yaw: c_float,
     pub pitch: c_float,
 }
 
@@ -59,11 +58,11 @@ impl ops::Mul<Vec3> for Vec3
     }
 }
 
-impl ops::Mul<f32> for Vec3
+impl ops::Mul<c_float> for Vec3
 {
     type Output = Self;
 
-    fn mul(mut self, rhs: f32) -> Self
+    fn mul(mut self, rhs: c_float) -> Self
     {
         self.x *= rhs;
         self.y *= rhs;
@@ -74,9 +73,12 @@ impl ops::Mul<f32> for Vec3
 
 impl Vec3
 {
-    pub fn new(x: f32, y: f32, z: f32) -> Self { Self { x, y, z } }
+    pub const fn new(x: c_float, y: c_float, z: c_float) -> Self
+    {
+        Self { x, y, z }
+    }
 
-    pub fn empty() -> Self
+    pub const fn empty() -> Self
     {
         Self {
             x: 0.0,

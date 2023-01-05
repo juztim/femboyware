@@ -11,8 +11,21 @@ crate-type = ["cdylib"]
 [dependencies]
 # use detour fork because the maintianer of the original crate is an idiotic femboy
 detour = { git = "https://github.com/Hpmason/detour-rs", branch = "fix-nightly1.67.0-changes" }
-winapi = { version = "^0.3", features = ["minwindef", "memoryapi", "consoleapi", "libloaderapi", "winnt", "wincon", "winuser", "processthreadsapi"] }
 vtables = { git = "https://github.com/kuragehime/vtables.git" }
 vtables_derive = { git = "https://github.com/kuragehime/vtables_derive.git" }
 lazy_static = { version = "^1.4", features = ["spin_no_std"] }
 spin = "0.9.4"
+byte-strings = "0.2.2"
+log = { version = "0.4.17", features = ["std"] }
+simplelog = "0.12.0"
+
+[dependencies.windows]
+version = "0.43.0"
+features = [
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_System_LibraryLoader",
+    "Win32_System_Threading",
+    "Win32_System_SystemServices",
+    "Win32_System_Console",
+]

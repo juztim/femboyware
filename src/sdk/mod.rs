@@ -1,2 +1,2 @@
-﻿pub mod interfaces;
+pub mod interfaces;
 pub mod structs;
