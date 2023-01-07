@@ -1,6 +1,7 @@
 use std::ffi::c_void;
 
 #[repr(C)]
+#[allow(dead_code)]
 struct SteamAPIContext
 {
     steam_client: *const c_void,

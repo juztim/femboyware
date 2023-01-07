@@ -1,11 +1,9 @@
-use crate::sdk::interfaces::v_engine_client::EngineClient;
 use crate::utils::get_interface;
 use byte_strings::c;
 use lazy_static::lazy_static;
-use log::{info, trace};
+use log::info;
 use spin::RwLock;
 use std::collections::BTreeMap;
-use std::f32::consts::E;
 
 pub mod chcl_client;
 pub mod i_client_mode;
