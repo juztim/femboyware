@@ -5,9 +5,9 @@ use vtables_derive::{has_vtable, virtual_index, VTable};
 
 #[has_vtable]
 #[derive(VTable, Debug)]
-pub struct HclClient {}
+pub struct BaseClient {}
 
-impl HclClient
+impl BaseClient
 {
     #[virtual_index(10)]
     pub fn hud_process_input(&self, active: bool) {}
