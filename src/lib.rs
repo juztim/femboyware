@@ -39,12 +39,16 @@ unsafe extern "system" fn dll_main(_lparam: *mut c_void) -> u32
     info!("the gay bomb has been deployed");
 
     sdk::interfaces::init();
-
+    
     let engine_client_ref =
         interface_ref!("VClient018", sdk::interfaces::v_engine_client::EngineClient);
-    let local_player = engine_client_ref.get_local_player();
+    
+    let steam_api_ctx = engine_client_ref.get_steam_api_context();
+    let local_player = engine_client.as_ref().unwrap().get_local_player();
 
-    info!("local player: {local_player}");
+    info!("steam api context: {steam_api_ctx}");
+    info!("local player: {local_player:?}");
+    
 
     hooks::create_move::init();
 
