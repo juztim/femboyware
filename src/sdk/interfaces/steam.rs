@@ -2,7 +2,8 @@ use std::ffi::c_void;
 
 #[repr(C)]
 #[allow(dead_code)]
-struct SteamAPIContext
+#[derive(Debug)]
+pub struct SteamAPIContext
 {
     steam_client: *const c_void,
     steam_user: *const c_void,
