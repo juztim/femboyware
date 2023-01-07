@@ -23,7 +23,7 @@ impl EngineClient
     pub fn is_connected(&self) -> bool {}
     
     #[virtual_index(185)]
-    pub fn get_steam_api_context(&self) -> SteamAPIContext {}
+    pub fn get_steam_api_context(&self) -> *mut SteamAPIContext {}
 }
 
 unsafe impl Send for EngineClient {}

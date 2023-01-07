@@ -47,11 +47,13 @@ unsafe extern "system" fn dll_main(_lparam: *mut c_void) -> u32
     let ingame = engine_client_ref.is_in_game();
     let connected = engine_client_ref.is_connected();
     let max_clients = engine_client_ref.get_max_clients();
+    let steam_api_context = engine_client_ref.get_steam_api_context();
 
     info!("local player id: {local_player:?}");
     info!("ingame: {ingame:?}");
     info!("connected: {connected:?}");
     info!("max clients: {max_clients:?}");
+    info!("steam api context: {steam_api_context:#?}");
     
 
     hooks::create_move::init();
