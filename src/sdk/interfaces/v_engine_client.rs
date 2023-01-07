@@ -10,10 +10,10 @@ pub struct EngineClient {}
 impl EngineClient
 {
     #[virtual_index(12)]
-    pub fn get_local_player(&self) -> i32 {}
+    pub fn get_local_player(&self) -> usize {}
 
     #[virtual_index(185)]
-    pub fn get_steam_api_context(&self) -> i32 {}
+    pub fn get_steam_api_context(&self) -> usize {}
 }
 
 unsafe impl Send for EngineClient {}
