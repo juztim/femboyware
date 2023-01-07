@@ -1,6 +1,7 @@
 #![feature(abi_thiscall)]
 
 mod hooks;
+mod macros;
 mod memory;
 mod sdk;
 mod utils;
@@ -28,23 +29,6 @@ use windows::{
     },
 };
 
-unsafe fn get_interface<T>(name: &CStr, library: HSTRING) -> *mut T
-{
-    let handle = GetModuleHandleW(&library).expect("failed to get module handle");
-
-    trace!("handle: {handle:?}");
-
-    let function_address =
-        GetProcAddress(handle, s!("CreateInterface")).expect("failed to get function address");
-
-    trace!("function address: {:p}", &function_address);
-
-    type CreateInterfaceFn = extern "C" fn(*const i8, *const i32) -> usize;
-    let create_interface: CreateInterfaceFn = std::mem::transmute(function_address);
-
-    create_interface(name.as_ptr(), ptr::null()) as *mut T
-}
-
 unsafe extern "system" fn dll_main(_lparam: *mut c_void) -> u32
 {
     AllocConsole();
@@ -53,6 +37,14 @@ unsafe extern "system" fn dll_main(_lparam: *mut c_void) -> u32
     log_init();
 
     info!("the gay bomb has been deployed");
+
+    sdk::interfaces::init();
+
+    let engine_client_ref =
+        interface_ref!("VClient018", sdk::interfaces::v_engine_client::EngineClient);
+    let local_player = engine_client_ref.get_local_player();
+
+    info!("local player: {local_player}");
 
     hooks::create_move::init();
 
