@@ -2,6 +2,7 @@
 use core::ops;
 use std::ffi::c_float;
 
+#[allow(dead_code)]
 #[repr(C)]
 #[derive(Debug, Clone, Copy)]
 pub struct Vec3
@@ -71,6 +72,7 @@ impl ops::Mul<c_float> for Vec3
     }
 }
 
+#[allow(dead_code)]
 impl Vec3
 {
     pub const fn new(x: c_float, y: c_float, z: c_float) -> Self
