@@ -1,22 +1,21 @@
 #![feature(abi_thiscall)]
-#![feature(ptr_sub_ptr)]
+#![feature(once_cell)]
 
 extern crate alloc;
 
-mod hooks;
+mod hooking;
 mod macros;
 mod memory;
 mod pattern;
 mod sdk;
 mod utils;
 
-use log::{info, trace};
+use log::info;
 use simplelog::{ColorChoice, Config, TermLogger, TerminalMode};
 use std::ffi::c_void;
 
 use windows::Win32::UI::Input::KeyboardAndMouse::GetAsyncKeyState;
 
-use crate::pattern::patterns;
 use windows::{
     w,
     Win32::{
@@ -39,14 +38,10 @@ unsafe extern "system" fn dll_main(_lparam: *mut c_void) -> u32
 
     info!("the gay bomb has been deployed");
 
-    let a = patterns::dwClientState.get().unwrap();
-
-    trace!("client state is {:p}", a);
-
     sdk::interfaces::init();
 
-    hooks::end_scene::init();
-    hooks::create_move::init();
+    hooking::hooks::end_scene::init();
+    //hooks::create_move::init();
 
     loop
     {

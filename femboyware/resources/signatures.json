@@ -3,15 +3,12 @@
   "filename": "csgo",
   "signatures": [
     {
-      "name": "dwClientState",
-      "extra": 0,
+      "name": "DIRECTX_DEVICE",
+      "extra": 1,
       "relative": true,
-      "module": "engine.dll",
-      "offsets": [
-        1
-      ],
-      "pattern": "A1 ? ? ? ? 33 D2 6A 00 6A 00 33 C9 89 B0",
-      "result_type": "usize"
+      "module": "shaderapidx9.dll",
+      "pattern": "A1 ?? ?? ?? ?? 50 8B 08 FF 51 0C",
+      "result_type": "*const ::std::ffi::c_void"
     }
   ]
 }

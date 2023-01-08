@@ -47,7 +47,12 @@ impl<'a, T> Pattern<'a, T>
         unsafe {
             let module_mem = get_memory_of_module(self.module);
 
-            trace!("{} base is at {:p}", self.module, module_mem.as_ptr());
+            trace!(
+                "{} base is at {:p}, size of module {:x}",
+                self.module,
+                module_mem.as_ptr(),
+                module_mem.len()
+            );
 
             let result = find_signature_in_slice(module_mem, self.signature);
 

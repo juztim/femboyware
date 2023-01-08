@@ -49,7 +49,7 @@ pub fn patterns(_item: TokenStream) -> TokenStream
         };
 
         let signature_bytes = pattern.pattern.split(' ').map(|x| {
-            if x != "?"
+            if x != "??"
             {
                 let byte = u8::from_str_radix(x, 16).unwrap();
                 quote! { Some(#byte) }

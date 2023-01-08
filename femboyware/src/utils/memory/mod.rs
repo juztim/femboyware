@@ -1,11 +1,13 @@
 use core::slice;
 
-use std::mem;
+use std::{ffi::c_void, mem};
 
 use windows::{
     core::HSTRING,
     Win32::System::{
-        Diagnostics::Debug::IMAGE_NT_HEADERS32, LibraryLoader::GetModuleHandleW,
+        Diagnostics::Debug::IMAGE_NT_HEADERS32,
+        LibraryLoader::GetModuleHandleW,
+        Memory::{VirtualProtect, PAGE_READWRITE},
         SystemServices::IMAGE_DOS_HEADER,
     },
 };
@@ -64,6 +66,28 @@ pub fn find_signature_in_slice<'a, T: Eq>(
     }
 
     Err(FindSignatureError::SignatureNotFoundError)
+}
+
+pub unsafe fn modify_protected<T>(target: &mut T, value: T)
+{
+    let mut old_protection = Default::default();
+    let target_pointer = target as *const _ as *const c_void;
+
+    VirtualProtect(
+        target_pointer,
+        mem::size_of::<T>(),
+        PAGE_READWRITE,
+        &mut old_protection,
+    );
+
+    *target = value;
+
+    VirtualProtect(
+        target_pointer,
+        mem::size_of::<T>(),
+        old_protection,
+        std::ptr::null_mut(),
+    );
 }
 
 #[cfg(test)]
