@@ -1,17 +1,16 @@
 #![feature(abi_thiscall)]
+#![feature(ptr_sub_ptr)]
 
 mod hooks;
 mod memory;
+mod pattern;
 mod sdk;
 mod utils;
 
-#[cfg(not(target_os = "windows"))]
-compile_error!("use windows you fucking degen");
-
+use log::{info, trace};
+use simplelog::{ColorChoice, Config, TermLogger, TerminalMode};
 use std::ffi::{c_void, CStr};
 use std::ptr;
-use simplelog::{Config, TerminalMode, ColorChoice, TermLogger};
-use log::{trace, info};
 use windows::{
     core::HSTRING,
     s, w,
@@ -25,6 +24,8 @@ use windows::{
         },
     },
 };
+
+use crate::pattern::patterns;
 
 unsafe fn get_interface<T>(name: &CStr, library: HSTRING) -> *mut T
 {
@@ -47,10 +48,14 @@ unsafe extern "system" fn dll_main(_lparam: *mut c_void) -> u32
 {
     AllocConsole();
     SetConsoleTitleW(w!("femboyware"));
-    
+
     log_init();
-    
+
     info!("the gay bomb has been deployed");
+
+    let a = patterns::dwClientState.get().unwrap();
+
+    trace!("client state is {:p}", a);
 
     hooks::create_move::init();
 
@@ -79,12 +84,19 @@ pub unsafe extern "stdcall" fn DllMain(module: HINSTANCE, reason: u32, _: usize)
             .unwrap();
         }
 
-        _ => ()
+        _ => (),
     }
 
     true.into()
 }
 
-fn log_init() {
-    TermLogger::init(log::LevelFilter::Trace, Config::default(), TerminalMode::Stdout, ColorChoice::Always).unwrap();
+fn log_init()
+{
+    TermLogger::init(
+        log::LevelFilter::Trace,
+        Config::default(),
+        TerminalMode::Stdout,
+        ColorChoice::Always,
+    )
+    .unwrap();
 }

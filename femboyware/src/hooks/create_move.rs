@@ -1,8 +1,8 @@
 use crate::get_interface;
 use crate::sdk::structs::user_cmd::UserCmd;
+use byte_strings::c;
 use log::trace;
 use std::ffi::{c_float, c_void};
-use byte_strings::c;
 
 type FnCreateMove =
     unsafe extern "fastcall" fn(*const c_void, *const c_void, c_float, *mut UserCmd) -> bool;

@@ -1,0 +1,17 @@
+{
+  "executable": "csgo.exe",
+  "filename": "csgo",
+  "signatures": [
+    {
+      "name": "dwClientState",
+      "extra": 0,
+      "relative": true,
+      "module": "engine.dll",
+      "offsets": [
+        1
+      ],
+      "pattern": "A1 ? ? ? ? 33 D2 6A 00 6A 00 33 C9 89 B0",
+      "result_type": "usize"
+    }
+  ]
+}
