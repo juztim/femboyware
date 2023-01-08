@@ -9,7 +9,6 @@ use proc_macro::TokenStream;
 use proc_macro2::{Ident, Span};
 use quote::quote;
 use structure::Config;
-use syn::parse::Parse;
 
 #[proc_macro]
 pub fn patterns(_item: TokenStream) -> TokenStream
