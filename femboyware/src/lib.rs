@@ -40,13 +40,14 @@ unsafe extern "system" fn dll_main(_lparam: *mut c_void) -> u32
 
     sdk::interfaces::init();
 
-    hooking::hooks::end_scene::init();
+    hooking::hooks::end_scene::hook();
     //hooks::create_move::init();
 
     loop
     {
         if GetAsyncKeyState(35) != 0
         {
+            hooking::hooks::end_scene::unhook();
             FreeConsole();
             FreeLibraryAndExitThread(std::mem::transmute::<*mut c_void, HINSTANCE>(_lparam), 0);
         }
