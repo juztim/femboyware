@@ -2,12 +2,12 @@ use crate::features;
 use crate::hooking::vmt::VmtHook;
 use crate::pattern::patterns;
 
-use log::info;
+
 
 use std::cell::OnceCell;
-use std::ffi::c_void;
+
 use winapi::shared::d3d9::LPDIRECT3DDEVICE9;
-use winapi::shared::d3d9types::{D3DCLEAR_TARGET, D3DCOLOR_XRGB, D3DRECT};
+
 
 use windows::core::HRESULT;
 

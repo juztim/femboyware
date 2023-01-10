@@ -2,7 +2,7 @@
 
 use std::ffi::c_void;
 use std::os::raw::c_char;
-use vtables_derive::{has_vtable, virtual_index, VTable};
+
 
 pub type RecvVarProxyFn = fn(data: *const RecvProxy, struct_ptr: *mut c_void, out_ptr: *mut c_void);
 

@@ -4,7 +4,7 @@ use log::info;
 use spin::RwLock;
 use std::collections::BTreeMap;
 use std::ffi::CStr;
-use std::thread::sleep;
+
 
 pub static mut NETVARS: RwLock<BTreeMap<String, usize>> = RwLock::new(BTreeMap::new());
 
@@ -27,7 +27,7 @@ pub unsafe fn init()
 
 pub unsafe fn get(name: &str) -> usize
 {
-    NETVARS.read().get(name).unwrap().clone()
+    *NETVARS.read().get(name).unwrap()
 }
 
 unsafe fn write(table: *mut RecvTable)
@@ -43,7 +43,7 @@ unsafe fn write(table: *mut RecvTable)
             write(prop.data_table);
         }
         NETVARS.write().insert(
-            alloc::format!("{}->{}", table_name, p_name),
+            alloc::format!("{table_name}->{p_name}"),
             prop.offset as _,
         );
     }
