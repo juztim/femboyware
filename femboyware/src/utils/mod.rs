@@ -1,5 +1,6 @@
 pub mod math;
 pub mod memory;
+pub mod netvars;
 
 use log::trace;
 use std::{ffi::CStr, ptr};

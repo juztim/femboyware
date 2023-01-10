@@ -29,3 +29,18 @@ macro_rules! interface_ref {
         }
     }};
 }
+
+#[macro_export]
+macro_rules! netvar {
+    ($self:expr,$netvar:literal) => {
+        static mut cache: usize = 0usize;
+        unsafe {
+            if cache == 0
+            {
+                cache = netvars::get($netvar);
+                return $self.get(cache);
+            }
+            return $self.get(cache);
+        }
+    };
+}

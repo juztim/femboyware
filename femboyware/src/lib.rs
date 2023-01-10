@@ -2,7 +2,9 @@
 #![feature(once_cell)]
 
 extern crate alloc;
+extern crate core;
 
+mod features;
 mod hooking;
 mod macros;
 mod memory;
@@ -39,6 +41,8 @@ unsafe extern "system" fn dll_main(_lparam: *mut c_void) -> u32
     info!("the gay bomb has been deployed");
 
     sdk::interfaces::init();
+
+    utils::netvars::init();
 
     hooking::hooks::end_scene::hook();
     //hooks::create_move::init();
