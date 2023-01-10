@@ -2,7 +2,6 @@
 #![feature(once_cell)]
 
 extern crate alloc;
-extern crate core;
 
 mod features;
 mod hooking;

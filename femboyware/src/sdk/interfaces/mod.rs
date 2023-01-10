@@ -11,7 +11,7 @@ use std::cell::OnceCell;
 
 
 pub mod base_client;
-pub mod entity;
+pub mod base_entity;
 pub mod entity_list;
 pub mod i_client_mode;
 pub mod steam;
