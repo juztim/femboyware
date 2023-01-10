@@ -37,7 +37,7 @@ macro_rules! netvar {
         unsafe {
             if cache == 0
             {
-                cache = netvars::get($netvar);
+                cache = $crate::utils::netvars::get($netvar);
                 return $self.get(cache);
             }
             return $self.get(cache);

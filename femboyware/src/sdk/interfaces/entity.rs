@@ -1,7 +1,10 @@
 use crate::netvar;
+use crate::sdk::interfaces::base_object::BaseObject;
 
 #[repr(C)]
 pub struct BaseEntity {}
+
+impl BaseObject for BaseEntity {}
 
 impl BaseEntity
 {

@@ -16,6 +16,7 @@ pub mod entity_list;
 pub mod i_client_mode;
 pub mod steam;
 pub mod v_engine_client;
+pub mod base_object;
 
 #[derive(Debug)]
 pub struct Interfaces<'a>
